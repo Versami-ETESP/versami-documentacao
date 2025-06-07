@@ -17,6 +17,7 @@ Para configurar o banco de dados Versami, siga as instruções abaixo na ordem d
 2.  **Inserção de Dados Iniciais (`script-inserts-BD.sql`)**
     * Após a criação do esquema, este script popula as tabelas com dados essenciais para o funcionamento da aplicação (ex: permissões, perguntas secretas, gêneros, autores, livros, usuários, publicações, etc.).
     * **Atenção:** Este script contém instruções `INSERT` que referenciam imagens de capa de livros usando `OPENROWSET(BULK ...)`. Você precisará **alterar o caminho dos arquivos de imagem** para corresponder à localização em sua máquina.
+    * As imagens das capas dos livros estão localizadas na pasta CAPAS_LIVROS dentro da pasta scripts (referindo-se à estrutura do repositório versami-database).
     * **Exemplo da linha a ser alterada:**
         ```sql
         (SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\domcasmurro.jpg', SINGLE_BLOB) AS img),1,2),
