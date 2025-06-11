@@ -1,16 +1,16 @@
+/*
+* ATENÇÃO: ANTES DE EXCECUTAR VERIFICAR SE O BANCO DE DADOS VERSAMI FOI CRIADO CONFORME O ARQUIVO 'script-criacaoBD'.
+* SEGUIR EXATAMENTE A ORDEM QUE ESTA DISPOSTA NESSE ARQUIVO PARA NAO HAVER ERROS AO INSERIR OS DADOS NO BANCO. 
+*/
+
 USE versami
-GO
-EXEC sp_configure 'show advanced options', 1;
-RECONFIGURE;
-EXEC sp_configure 'Ad Hoc Distributed Queries', 1;
-RECONFIGURE;
-GO
+
 INSERT INTO tblPermissao VALUES
 	('MASTER'),
 	('EDITAR LIVROS'),
 	('MODERAR PUBLICACOES'),
 	('PUBLICAR BLOG');
-GO
+
 INSERT INTO tblPerguntaSecreta(pergunta) VALUES
 	('Qual é o nome do seu primeiro animal de estimação?'),
 	('Em que cidade você nasceu?'),
@@ -22,12 +22,12 @@ INSERT INTO tblPerguntaSecreta(pergunta) VALUES
 	('Qual é o nome do seu livro favorito?'),
 	('Qual o nome do seu professor favorito na escola?'),
 	('Qual foi o destino da sua primeira viagem?');
-GO
+
 INSERT INTO tblStatusDenuncia(descStatus) VALUES
 	('PENDENTE'),
 	('DEFERIDO'),
 	('INDEFERIDO');
-GO
+
 INSERT INTO tblTipoNotificacao(descTipo) VALUES
 	('CURTIDA POST'),
 	('CURTIDA COMENTARIO'),
@@ -35,7 +35,7 @@ INSERT INTO tblTipoNotificacao(descTipo) VALUES
 	('SEGUIU'),
 	('FEEDBACK DENUNCIA'),
 	('POST DELETADO');
-GO
+
 INSERT INTO tblGenero(nomeGenero,descGenero) VALUES
 	('Romance','Narrativa focada em relacionamentos e emoções humanas'),
 	('Fantasia','Histórias com elementos mágicos e mundos imaginários'),
@@ -58,7 +58,7 @@ INSERT INTO tblGenero(nomeGenero,descGenero) VALUES
     ('Autoajuda', 'Livros com conselhos e reflexões para desenvolvimento pessoal'),
     ('Clássico', 'Obras reconhecidas historicamente por seu valor literário e cultural'),
     ('Epistolar', 'Narrativas contadas por meio de cartas, e-mails ou trocas de mensagens');
-GO
+
 INSERT INTO tblAutor(nomeAutor,descAutor) VALUES
 	('Autor Desconhecido','Sem Informações'),
 	('Machado de Assis', 'Clássico brasileiro, mestre do realismo e da ironia'),
@@ -94,76 +94,101 @@ INSERT INTO tblAutor(nomeAutor,descAutor) VALUES
 	('Suzanne Collins', 'Autora americana da trilogia Jogos Vorazes, sucesso mundial de distopia jovem'),
 	('Raphael Montes', 'Autor brasileiro contemporâneo de suspense e terror psicológico'),
 	('Itamar Vieira Junior', 'Autor brasileiro de Torto Arado, com foco em questões sociais e identitárias');
-GO
-INSERT INTO tblLivro(nomeLivro,descLivro,imgCapa,idGenero,idAutor) VALUES 
-	('DOM CASMURRO', 'Dom Casmurro conta a história de Bento Santiago, um homem que se apaixona por Capitu e abandona o seminário.',
-		(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\domcasmurro.jpg', SINGLE_BLOB) AS img),1,2),
-	('A GUERRA DOS TRONOS', 'Narra a vida dos nobres de Westeros 15 anos após a rebelião que pos fim a dinatia Targaryen.',
-		(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\got.jpeg', SINGLE_BLOB) AS img),2,4),
-	('É ASSIM QUE ACABA', 'A vida de Lily muda após a morte de seu pai. Ela se redescobre em Boston, onde abre um negócio.', 
-		(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\assimqueacaba.jpg', SINGLE_BLOB) AS img),6,3),
-	('HARRY POTTER E A PEDRA FILOSOFAL', 'Primeiro volume da série onde Harry descobre que é um bruxo e vai para Hogwarts.',
-		(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\harrypotter1.jpg', SINGLE_BLOB) AS img),2,5),
-	('A FURIA DOS REIS', 'A guerra dos 5 reis começa em westeros após a morte de Ned Stark. os dragões ressurgem e Daenerys continua sua peregrinação em Essos.',
-		(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\furiareis.jpg', SINGLE_BLOB) AS img),2,4),
-	('IT: A COISA', 'Em Derry, um grupo de amigos enfrenta uma entidade maligna que assume a forma de um palhaço.',
-		(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\it.jpg', SINGLE_BLOB) AS img),3,6),
-	('O PEQUENO PRÍNCIPE', 'Um piloto encontra um príncipe vindo de um asteroide e aprende lições sobre a vida.',
-		(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\pequenoprincipe.jpg', SINGLE_BLOB) AS img),20,1),
-	('CEM ANOS DE SOLIDÃO', 'Saga da família Buendía na fictícia Macondo, misturando realidade e fantasia.',
-		(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\cemanos.jpg', SINGLE_BLOB) AS img),1,11),
-	('ENSAIO SOBRE A CEGUEIRA', 'Uma epidemia de cegueira branca atinge uma cidade e revela a fragilidade da sociedade.',
-		(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\ensaiocegueira.jpg', SINGLE_BLOB) AS img),5,1),
-	('ORGULHO E PRECONCEITO', 'Elizabeth Bennet enfrenta questões de moralidade e casamento na Inglaterra do século XIX.',
-		(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\orgulhoepreconceito.jpg', SINGLE_BLOB) AS img),1,10),
-	('O CONTO DA AIA', 'Em um regime totalitário, mulheres são subjugadas e usadas para reprodução.',
-		(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\contodaia.jpg', SINGLE_BLOB) AS img),13,28),
-	('TORTO ARADO', 'A vida de duas irmãs no sertão baiano marcada por ancestralidade e injustiça social.',
-		(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\tortoarado.jpg', SINGLE_BLOB) AS img),6,33),
-	('O SENHOR DOS ANÉIS: A SOCIEDADE DO ANEL', 'Um grupo parte em missão para destruir um anel de poder.',
-		(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\sociedadedoanel.jpg', SINGLE_BLOB) AS img),2,9),
-	('O ILUMINADO', 'Uma família isolada em um hotel começa a vivenciar manifestações sobrenaturais.',
-		(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\oiluminado.jpg', SINGLE_BLOB) AS img),3,6),
-	('VERÔNIKA DECIDE MORRER', 'Verônika tenta o suicídio, mas acorda em uma clínica e começa a repensar sua vida.',
-		(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\veronika.jpg', SINGLE_BLOB) AS img),6,16),
-	('A REVOLUÇÃO DOS BICHOS', 'Fábula política em que animais se rebelam contra humanos para formar uma sociedade igualitária.',
-		(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\revolucaobichos.jpg', SINGLE_BLOB) AS img),13,1),
-	('O DIÁRIO DE ANNE FRANK', 'Relato real de uma jovem judia escondida durante a ocupação nazista.',
-		(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\diarioanne.jpg', SINGLE_BLOB) AS img),21,1),
-	('JOGOS VORAZES', 'Katniss participa de um jogo mortal transmitido ao vivo em uma sociedade distópica.',
-		(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\jogosvorazes.jpg', SINGLE_BLOB) AS img),13,31),
-	('A METAMORFOSE', 'Kafka narra a transformação de Gregor Samsa em um inseto e seu isolamento.',
-		(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\metamorfose.jpg', SINGLE_BLOB) AS img),6,12),
-	('POESIA COMPLETA', 'Coletânea das principais obras poéticas de Carlos Drummond de Andrade.',
-		(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\poesiacompleta.jpg', SINGLE_BLOB) AS img),11,17),
-	('VIDA E MORTE DE M.J. GONZAGA DE SÁ', 'Narrativas filosóficas e fragmentárias que discutem a existência.',
-		(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\vidamorte.jpg', SINGLE_BLOB) AS img),10,7),
-	('NEUROMANCER', 'Um hacker é contratado para uma missão perigosa em um mundo cyberpunk.',
-		(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\neuromancer.jpg', SINGLE_BLOB) AS img),5,1),
-	('AS CRÔNICAS DE NÁRNIA', 'Quatro irmãos descobrem um mundo mágico dentro de um guarda-roupa.',
-		(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\narnia.jpg', SINGLE_BLOB) AS img),2,1),
-	('O MORRO DOS VENTOS UIVANTES', 'Uma intensa história de amor e vingança nas charnecas inglesas.',
-		(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\morro.jpg', SINGLE_BLOB) AS img),1,1),
-	('ENQUANTO EU NÃO TE ENCONTRO', 'Romance LGBTQIA+ com humor e descobertas, ambientado no Brasil.',
-		(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\enquantonao.jpg', SINGLE_BLOB) AS img),1,1),
-	('O NOME DO VENTO', 'Kvothe, um herói lendário, conta sua própria história em um mundo mágico e cruel.',
-		(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\nomevento.jpg', SINGLE_BLOB) AS img),2,1),
-	('PEQUENAS GRANDES MENTIRAS', 'Três mulheres se envolvem em um crime chocante e mistérios do cotidiano.',
-		(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\pequenasgrandes.jpg', SINGLE_BLOB) AS img),4,1),
-	('O PERFUME', 'Um assassino com olfato extraordinário busca criar a essência perfeita com vítimas humanas.',
-		(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\perfume.jpg', SINGLE_BLOB) AS img),4,1),
-	('A HORA DA ESTRELA', 'Macabéa, nordestina pobre no Rio de Janeiro, enfrenta invisibilidade social.',
-		(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\horaestrela.jpg', SINGLE_BLOB) AS img),6,7),
-	('SUICIDAS', 'Nove jovens se matam em um jogo misterioso com reviravoltas sombrias.',
-		(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-database\scripts\IMAGENS\CAPAS_LIVROS\suicidas.jpg', SINGLE_BLOB) AS img),4,32);
-GO
+
+/*
+* ATENCAO: FAVOR EXECUTAR OS SEGUINTES COMANDOS ANTES DE PROSSEGUIR COM OS INSERTS DA TABELA tblLivro
+* ESTE PASSO É IMPORTANTE PARA CONFIGURAR O SQL SERVER A RECEBER OS ARQUIVOS DE IMAGEM SEM ERROS.
+*/
+
+EXEC sp_configure 'show advanced options', 1;
+RECONFIGURE;
+EXEC sp_configure 'Ad Hoc Distributed Queries', 1;
+RECONFIGURE;
+
+/*
+* ATENCAO: ALTERAR OS SEGUINTES TRECHOS DO INSERT QUE CONTEM 
+*'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS'
+*
+* AQUI SERA NECESSARIO INSERIR O CAMINHO DA PASTA ONDE FOI SALVO AS CAPAS DOS LIVROS.
+* ESSAS IMAGENS VIERAM JUNTO QUANDO O REPOSITORIO FOI CLONADO E ESTAO NA PASTA ..\SCRIPTS DB\CAPAS_LIVROS
+*/
+
+BEGIN TRY
+	INSERT INTO tblLivro(nomeLivro,descLivro,imgCapa,idGenero,idAutor) VALUES 
+		('DOM CASMURRO', 'Dom Casmurro conta a história de Bento Santiago, um homem que se apaixona por Capitu e abandona o seminário.',
+			(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS\domcasmurro.jpg', SINGLE_BLOB) AS img),1,2),
+		('A GUERRA DOS TRONOS', 'Narra a vida dos nobres de Westeros 15 anos após a rebelião que pos fim a dinatia Targaryen.',
+			(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS\got.jpeg', SINGLE_BLOB) AS img),2,4),
+		('É ASSIM QUE ACABA', 'A vida de Lily muda após a morte de seu pai. Ela se redescobre em Boston, onde abre um negócio.', 
+			(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS\assimqueacaba.jpg', SINGLE_BLOB) AS img),6,3),
+		('HARRY POTTER E A PEDRA FILOSOFAL', 'Primeiro volume da série onde Harry descobre que é um bruxo e vai para Hogwarts.',
+			(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS\harrypotter1.jpg', SINGLE_BLOB) AS img),2,5),
+		('A FURIA DOS REIS', 'A guerra dos 5 reis começa em westeros após a morte de Ned Stark. os dragões ressurgem e Daenerys continua sua peregrinação em Essos.',
+			(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS\furiareis.jpg', SINGLE_BLOB) AS img),2,4),
+		('IT: A COISA', 'Em Derry, um grupo de amigos enfrenta uma entidade maligna que assume a forma de um palhaço.',
+			(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS\it.jpg', SINGLE_BLOB) AS img),3,6),
+		('O PEQUENO PRÍNCIPE', 'Um piloto encontra um príncipe vindo de um asteroide e aprende lições sobre a vida.',
+			(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS\pequenoprincipe.jpg', SINGLE_BLOB) AS img),20,1),
+		('CEM ANOS DE SOLIDÃO', 'Saga da família Buendía na fictícia Macondo, misturando realidade e fantasia.',
+			(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS\cemanos.jpg', SINGLE_BLOB) AS img),1,11),
+		('ENSAIO SOBRE A CEGUEIRA', 'Uma epidemia de cegueira branca atinge uma cidade e revela a fragilidade da sociedade.',
+			(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS\ensaiocegueira.jpg', SINGLE_BLOB) AS img),5,1),
+		('ORGULHO E PRECONCEITO', 'Elizabeth Bennet enfrenta questões de moralidade e casamento na Inglaterra do século XIX.',
+			(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS\orgulhoepreconceito.jpg', SINGLE_BLOB) AS img),1,10),
+		('O CONTO DA AIA', 'Em um regime totalitário, mulheres são subjugadas e usadas para reprodução.',
+			(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS\contodaia.jpg', SINGLE_BLOB) AS img),13,28),
+		('TORTO ARADO', 'A vida de duas irmãs no sertão baiano marcada por ancestralidade e injustiça social.',
+			(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS\tortoarado.jpg', SINGLE_BLOB) AS img),6,33),
+		('O SENHOR DOS ANÉIS: A SOCIEDADE DO ANEL', 'Um grupo parte em missão para destruir um anel de poder.',
+			(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS\sociedadedoanel.jpg', SINGLE_BLOB) AS img),2,9),
+		('O ILUMINADO', 'Uma família isolada em um hotel começa a vivenciar manifestações sobrenaturais.',
+			(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS\oiluminado.jpg', SINGLE_BLOB) AS img),3,6),
+		('VERÔNIKA DECIDE MORRER', 'Verônika tenta o suicídio, mas acorda em uma clínica e começa a repensar sua vida.',
+			(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS\veronika.jpg', SINGLE_BLOB) AS img),6,16),
+		('A REVOLUÇÃO DOS BICHOS', 'Fábula política em que animais se rebelam contra humanos para formar uma sociedade igualitária.',
+			(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS\revolucaobichos.jpg', SINGLE_BLOB) AS img),13,1),
+		('O DIÁRIO DE ANNE FRANK', 'Relato real de uma jovem judia escondida durante a ocupação nazista.',
+			(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS\diarioanne.jpg', SINGLE_BLOB) AS img),21,1),
+		('JOGOS VORAZES', 'Katniss participa de um jogo mortal transmitido ao vivo em uma sociedade distópica.',
+			(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS\jogosvorazes.jpg', SINGLE_BLOB) AS img),13,31),
+		('A METAMORFOSE', 'Kafka narra a transformação de Gregor Samsa em um inseto e seu isolamento.',
+			(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS\metamorfose.jpg', SINGLE_BLOB) AS img),6,12),
+		('POESIA COMPLETA', 'Coletânea das principais obras poéticas de Carlos Drummond de Andrade.',
+			(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS\poesiacompleta.jpg', SINGLE_BLOB) AS img),11,17),
+		('VIDA E MORTE DE M.J. GONZAGA DE SÁ', 'Narrativas filosóficas e fragmentárias que discutem a existência.',
+			(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS\vidamorte.jpg', SINGLE_BLOB) AS img),10,7),
+		('NEUROMANCER', 'Um hacker é contratado para uma missão perigosa em um mundo cyberpunk.',
+			(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS\neuromancer.jpg', SINGLE_BLOB) AS img),5,1),
+		('AS CRÔNICAS DE NÁRNIA', 'Quatro irmãos descobrem um mundo mágico dentro de um guarda-roupa.',
+			(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS\narnia.jpg', SINGLE_BLOB) AS img),2,1),
+		('O MORRO DOS VENTOS UIVANTES', 'Uma intensa história de amor e vingança nas charnecas inglesas.',
+			(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS\morro.jpg', SINGLE_BLOB) AS img),1,1),
+		('ENQUANTO EU NÃO TE ENCONTRO', 'Romance LGBTQIA+ com humor e descobertas, ambientado no Brasil.',
+			(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS\enquantonao.jpg', SINGLE_BLOB) AS img),1,1),
+		('O NOME DO VENTO', 'Kvothe, um herói lendário, conta sua própria história em um mundo mágico e cruel.',
+			(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS\nomevento.jpg', SINGLE_BLOB) AS img),2,1),
+		('PEQUENAS GRANDES MENTIRAS', 'Três mulheres se envolvem em um crime chocante e mistérios do cotidiano.',
+			(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS\pequenasgrandes.jpg', SINGLE_BLOB) AS img),4,1),
+		('O PERFUME', 'Um assassino com olfato extraordinário busca criar a essência perfeita com vítimas humanas.',
+			(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS\perfume.jpg', SINGLE_BLOB) AS img),4,1),
+		('A HORA DA ESTRELA', 'Macabéa, nordestina pobre no Rio de Janeiro, enfrenta invisibilidade social.',
+			(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS\horaestrela.jpg', SINGLE_BLOB) AS img),6,7),
+		('SUICIDAS', 'Nove jovens se matam em um jogo misterioso com reviravoltas sombrias.',
+			(SELECT * FROM OPENROWSET(BULK 'D:\Ygor Gabriel\Documents\GitHub\versami-documentacao\SCRIPTS DB\CAPAS_LIVROS\suicidas.jpg', SINGLE_BLOB) AS img),4,32);
+END TRY
+BEGIN CATCH
+	PRINT 'ERRO AO INSERIR LIVROS. VERIFIQUE O CAMPO DO CAMINHO DA IMAGEM. MAIS DETALHES: ' + ERROR_MESSAGE();
+	RETURN;
+END CATCH
+
 -- A senha para todos os usuarios e ADMS é: 12345678 e a resposta para a pergunta secreta é 'São Paulo'
+
 INSERT INTO tblAdmin(nome,data_nasc,email,senha,arroba_usuario,permissao,pergunta,resposta) VALUES
 	('Teste Master',getdate(),'adm-master@versami.com','EF797C8118F02DFB649607DD5D3F8C7623048C9C063D532CC95C5ED7A898A64F','master-admin',1,2,'21A70F398236BC7FD6B6EEF154B88BEF5C6C04404B468508980CD40C840A453B'),
 	('Teste Livros',getdate(),'adm-livros@versami.com','EF797C8118F02DFB649607DD5D3F8C7623048C9C063D532CC95C5ED7A898A64F','livros-admin',2,2,'21A70F398236BC7FD6B6EEF154B88BEF5C6C04404B468508980CD40C840A453B'),
 	('Teste Mod',getdate(),'adm-moderador@versami.com','EF797C8118F02DFB649607DD5D3F8C7623048C9C063D532CC95C5ED7A898A64F','moderador-admin',3,2,'21A70F398236BC7FD6B6EEF154B88BEF5C6C04404B468508980CD40C840A453B'),
 	('Teste Blog',getdate(),'adm-blog@versami.com','EF797C8118F02DFB649607DD5D3F8C7623048C9C063D532CC95C5ED7A898A64F','blog-admin',4,2,'21A70F398236BC7FD6B6EEF154B88BEF5C6C04404B468508980CD40C840A453B');
-GO
+
 INSERT INTO tblUsuario (nome, data_nasc, email, senha, arroba_usuario, bio_usuario, resposta, idPergunta) VALUES
 	('João da Silva', '1990-05-12', 'joao.silva@email.com', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'joaosilva', 'Amante de livros de aventura.', '21a70f398236bc7fd6b6eef154b88bef5c6c04404b468508980cd40c840a453b', 2),
 	('Maria Oliveira', '1988-09-23', 'maria.oliveira@email.com', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'mariaoliveira', 'Apaixonada por romances históricos.', '21a70f398236bc7fd6b6eef154b88bef5c6c04404b468508980cd40c840a453b', 2),
@@ -185,7 +210,7 @@ INSERT INTO tblUsuario (nome, data_nasc, email, senha, arroba_usuario, bio_usuar
 	('Thaís Moreira', '1996-07-29', 'thais.moreira@email.com', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'thais', 'Compartilha trechos favoritos.', '21a70f398236bc7fd6b6eef154b88bef5c6c04404b468508980cd40c840a453b', 2),
 	('Henrique Lopes', '1993-03-03', 'henrique.lopes@email.com', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'hlopes', 'Leitor de clássicos brasileiros.', '21a70f398236bc7fd6b6eef154b88bef5c6c04404b468508980cd40c840a453b', 2),
 	('Aline Ferreira', '1998-05-20', 'aline.ferreira@email.com', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'alinef', 'Romancista em formação.', '21a70f398236bc7fd6b6eef154b88bef5c6c04404b468508980cd40c840a453b', 2);
-GO
+
 INSERT INTO tblSeguidores(idSeguidor,idSeguido) VALUES
 (1, 2),
 (1, 3),
@@ -237,7 +262,7 @@ INSERT INTO tblSeguidores(idSeguidor,idSeguido) VALUES
 (18, 13),
 (19, 20),
 (20, 19);
-GO
+
 INSERT INTO tblLivrosFavoritos(idUsuario, idLivro) VALUES
 (1, 1),
 (1, 3),
@@ -274,7 +299,7 @@ INSERT INTO tblLivrosFavoritos(idUsuario, idLivro) VALUES
 (18, 25),
 (19, 17),
 (20, 15);
-GO
+
 INSERT INTO tblBlogPost(titulo, conteudo, dataPost, idAdmin) VALUES
 ('Versami estreou!','Estamos em festa! A comunidade Versami convida os amantes de leitura para participar da nossa comunidade. Agradecemos a cada um que compartilha seu amor pela leitura aqui. E vem mais por aí: prepare-se para desafios literários e eventos exclusivos!',
  SYSDATETIME(), 2),
@@ -284,31 +309,45 @@ INSERT INTO tblBlogPost(titulo, conteudo, dataPost, idAdmin) VALUES
  SYSDATETIME(), 2),
 ('Vencedores do Prêmio Jabuti 2024 são anunciados','A premiação literária mais prestigiada do Brasil revelou seus vencedores em uma cerimônia emocionante. O destaque da noite foi para o autor Itamar Vieira Junior, que levou o prêmio de romance literário com “O Peso do Pássaro Morto”.',
  SYSDATETIME(), 2);
-GO
+
 INSERT INTO tblPublicacao (conteudo, dataPublic, idUsuario, idLivro) VALUES
 ('Alguém mais está animado com a nova funcionalidade do app?', DATEADD(day, -2, SYSDATETIME()), 11, NULL),
 ('Acabei de participar do clube de leitura e foi incrível trocar ideias com outros leitores.', DATEADD(day, -9, SYSDATETIME()), 12, NULL),
 ('Qual seu gênero literário favorito? Estou buscando novas recomendações!', DATEADD(day, -1, SYSDATETIME()), 13, NULL),
 ('A interface do app está cada vez mais amigável, parabéns ao time de desenvolvimento!', DATEADD(day, -7, SYSDATETIME()), 14, NULL),
-('Descobri um autor fantástico essa semana, vale a pena dar uma olhada nas obras dele.', DATEADD(day, -3, SYSDATETIME()), 15, NULL),
-('Estou organizando uma reunião virtual do clube de leitura para discutir clássicos.', DATEADD(day, -5, SYSDATETIME()), 16, NULL),
-('Alguém recomenda livros de suspense psicológico? Estou curioso para começar.', DATEADD(day, -4, SYSDATETIME()), 17, NULL),
-('Adoro quando o app destaca livros novos em destaque na página inicial.', DATEADD(day, -6, SYSDATETIME()), 18, NULL),
-('O fórum está ótimo para trocar experiências literárias, tenho aprendido muito.', DATEADD(day, -8, SYSDATETIME()), 19, NULL),
-('Que tal criarmos desafios semanais para incentivar a leitura entre os usuários?', DATEADD(day, -10, SYSDATETIME()), 20, NULL);
-GO
+('Descobri um autor fantástico essa semana, vale a pena dar uma olhada nas obras dele.', DATEADD(day, -2, SYSDATETIME()), 15, NULL),
+('Estou organizando uma reunião virtual do clube de leitura para discutir clássicos.', DATEADD(day, -7, SYSDATETIME()), 16, NULL),
+('Alguém recomenda livros de suspense psicológico? Estou curioso para começar.', DATEADD(day, -5, SYSDATETIME()), 17, NULL),
+('Adoro quando o app destaca livros novos em destaque na página inicial.', DATEADD(day, -8, SYSDATETIME()), 18, NULL),
+('O fórum está ótimo para trocar experiências literárias, tenho aprendido muito.', DATEADD(day, -10, SYSDATETIME()), 19, NULL),
+('Que tal criarmos desafios semanais para incentivar a leitura entre os usuários?', DATEADD(day, -20, SYSDATETIME()), 20, NULL);
+
 INSERT INTO tblPublicacao (conteudo, dataPublic, idUsuario, idLivro) VALUES
 ('Acabei de reler "Dom Casmurro" e me surpreendi com as nuances do Bentinho.', DATEADD(day, -2, SYSDATETIME()), 1, 1),
-('A Guerra dos Tronos é uma série que nunca envelhece, cheia de reviravoltas.', DATEADD(day, -5, SYSDATETIME()), 2, 2),
+('A Guerra dos Tronos é uma série que nunca envelhece, cheia de reviravoltas.', DATEADD(day, -7, SYSDATETIME()), 2, 2),
 ('A escrita de “É Assim Que Acaba” me tocou profundamente, recomendo muito.', DATEADD(day, -1, SYSDATETIME()), 3, 3),
-('Quem mais é fã de Harry Potter? O primeiro livro traz tanta magia e nostalgia!', DATEADD(day, -10, SYSDATETIME()), 4, 4),
+('Quem mais é fã de Harry Potter? O primeiro livro traz tanta magia e nostalgia!', DATEADD(day, -15, SYSDATETIME()), 4, 4),
 ('Terminei “It: A Coisa” e o suspense me deixou sem dormir por dias.', DATEADD(hour, -36, SYSDATETIME()), 5, 6),
 ('O Pequeno Príncipe é uma leitura que nunca perde a importância, para todas as idades.', DATEADD(day, -7, SYSDATETIME()), 6, 7),
 ('“Cem Anos de Solidão” é um mergulho intenso na magia do realismo fantástico.', DATEADD(day, -3, SYSDATETIME()), 7, 8),
 ('“Orgulho e Preconceito” é meu romance histórico favorito, adoro Elizabeth Bennet.', DATEADD(day, -8, SYSDATETIME()), 8, 10),
 ('Recomendo “O Conto da Aia” para quem gosta de distopias provocativas e críticas sociais.', DATEADD(day, -4, SYSDATETIME()), 9, 11),
-('“O Senhor dos Anéis: A Sociedade do Anel” é uma jornada épica que nunca cansa.', DATEADD(day, -6, SYSDATETIME()), 10, 13);
-GO
+('“O Senhor dos Anéis: A Sociedade do Anel” é uma jornada épica que nunca cansa.', DATEADD(day, -20, SYSDATETIME()), 10, 13);
+
+
+INSERT INTO tblComentario (comentario, data_coment, idPublicacao, idUsuario) VALUES
+('Sim! Essa nova função vai facilitar muito o uso diário.', DATEADD(hour, -3, SYSDATETIME()), 1, 12),
+('Adoro essas trocas, sempre descubro livros incríveis.', DATEADD(day, -2, SYSDATETIME()), 2, 13),
+('Gosto muito de fantasia, recomendo "O Nome do Vento".', DATEADD(day, -1, SYSDATETIME()), 3, 14),
+('O layout ficou muito mais intuitivo mesmo, parabéns!', DATEADD(hour, -15, SYSDATETIME()), 4, 15),
+('Compartilha o nome dele! Estou curioso também.', DATEADD(hour, -6, SYSDATETIME()), 5, 16),
+('Boa ideia! Poderíamos usar o Google Meet ou Discord.', DATEADD(day, -3, SYSDATETIME()), 6, 17),
+('Tenta “Garota Exemplar”, é excelente nesse estilo.', DATEADD(hour, -9, SYSDATETIME()), 7, 18),
+('Essa funcionalidade me fez conhecer autores novos.', DATEADD(day, -4, SYSDATETIME()), 8, 19),
+('Tenho aprendido muito com as experiências que leio lá.', DATEADD(hour, -18, SYSDATETIME()), 9, 20),
+('Apoiado! Isso pode incentivar quem está parado.', DATEADD(day, -6, SYSDATETIME()), 10, 11);
+
+
 INSERT INTO tblComentario (comentario, data_coment, idPublicacao, idUsuario) VALUES
 ('Concordo totalmente! Bentinho é um personagem complexo.', DATEADD(hour, -10, SYSDATETIME()), 11, 2),
 ('Essa série tem tantas reviravoltas que sempre fico surpreso.', DATEADD(day, -4, SYSDATETIME()), 12, 3),
@@ -320,31 +359,34 @@ INSERT INTO tblComentario (comentario, data_coment, idPublicacao, idUsuario) VAL
 ('Elizabeth Bennet é uma personagem que admiro demais.', DATEADD(day, -7, SYSDATETIME()), 18, 9),
 ('Distopias sempre fazem a gente pensar, ótima recomendação.', DATEADD(day, -3, SYSDATETIME()), 19, 10),
 ('Essa jornada épica merece ser relida várias vezes.', DATEADD(day, -5, SYSDATETIME()), 20, 4);
-GO
+
+
 INSERT INTO tblLikesPorPost (idUsuario, idPublicacao) VALUES
-(2, 10),
-(3, 13),
-(5, 2),
-(1, 3),
-(6, 4),
-(7, 5),
-(8, 6),
-(9, 7),
+(2, 1),   
+(3, 2),   
+(5, 3),  
+(6, 4),  
+(7, 5), 
+(8, 6), 
+(9, 7), 
 (10, 8),
-(4, 9);
-GO
+(11, 9),
+(12, 10);
+
+
 INSERT INTO tblLikesPorComentario (idUsuario, idComentario) VALUES
-(1, 2),
-(3, 3),
-(4, 4),
-(5, 5),
-(6, 6),
-(7, 7),
-(8, 8),
-(9, 9),
-(10, 10),
-(2, 11);
-GO
+(4, 1),  
+(5, 2),   
+(6, 3),  
+(7, 4),  
+(8, 5),  
+(9, 6), 
+(10, 7), 
+(11, 8),
+(12, 9),
+(13, 10);
+
+
 INSERT INTO tblDenuncia (idUsuario, idPublicacao, statusDenun) VALUES
 (3, 5, 1),
 (4, 8, 1),
