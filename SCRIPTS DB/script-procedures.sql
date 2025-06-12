@@ -1,5 +1,4 @@
 -- Procedure para login na aplicacao Desktop
-
 CREATE PROC usp_loginAdministrador
 @arroba varchar(30),
 @senha varchar(250)
@@ -37,3 +36,24 @@ BEGIN
 		SELECT idUsuario, nome, arroba_usuario, fotoUsuario, fotoCapa, bio_usuario FROM tblUsuario WHERE arroba_usuario = @arroba
 	END
 END
+
+CREATE PROC usp_faixaEtatariaUsers
+AS
+SELECT 
+    CASE 
+        WHEN DATEDIFF(YEAR, data_nasc, GETDATE()) BETWEEN 0 AND 17 THEN '0-17'
+        WHEN DATEDIFF(YEAR, data_nasc, GETDATE()) BETWEEN 18 AND 25 THEN '18-25'
+        WHEN DATEDIFF(YEAR, data_nasc, GETDATE()) BETWEEN 26 AND 35 THEN '26-35'
+        WHEN DATEDIFF(YEAR, data_nasc, GETDATE()) BETWEEN 36 AND 50 THEN '36-50'
+        ELSE '51+'
+    END AS FaixaEtaria,
+    COUNT(*) AS Quantidade
+FROM tblUsuario
+GROUP BY 
+    CASE 
+        WHEN DATEDIFF(YEAR, data_nasc, GETDATE()) BETWEEN 0 AND 17 THEN '0-17'
+        WHEN DATEDIFF(YEAR, data_nasc, GETDATE()) BETWEEN 18 AND 25 THEN '18-25'
+        WHEN DATEDIFF(YEAR, data_nasc, GETDATE()) BETWEEN 26 AND 35 THEN '26-35'
+        WHEN DATEDIFF(YEAR, data_nasc, GETDATE()) BETWEEN 36 AND 50 THEN '36-50'
+        ELSE '51+'
+    END;
